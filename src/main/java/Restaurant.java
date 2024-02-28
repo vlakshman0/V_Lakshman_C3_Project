@@ -8,6 +8,7 @@ public class Restaurant {
     public LocalTime openingTime;
     public LocalTime closingTime;
     private List<Item> menu = new ArrayList<Item>();
+    private List<String> selectedItems;
 
     public Restaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;
@@ -15,7 +16,19 @@ public class Restaurant {
         this.openingTime = openingTime;
         this.closingTime = closingTime;
     }
-
+    
+    public int calculateOrderValue(String... selectedItems) {
+        int orderValue = 0;
+    
+        for (String itemName : selectedItems) {
+            Item selectedItem = findItemByName(itemName);
+            if (selectedItem != null) {
+                orderValue += selectedItem.getPrice();
+            }
+        }
+    
+        return orderValue;
+    }
     public boolean isRestaurantOpen() {
         LocalTime currentTime = getCurrentTime();
         return currentTime.isAfter(openingTime) && currentTime.isBefore(closingTime);
@@ -48,6 +61,15 @@ public class Restaurant {
 
         menu.remove(itemToBeRemoved);
     }
+
+    public int getSelectedItemPrice() {
+        int amount = 0;
+        for(Item item: menu) {
+            amount += item.getPrice();
+        }
+        return amount;
+    }
+
     public void displayDetails(){
         System.out.println("Restaurant:"+ name + "\n"
                 +"Location:"+ location + "\n"

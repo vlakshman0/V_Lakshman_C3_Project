@@ -21,6 +21,7 @@ class RestaurantServiceTest {
     public void searching_for_non_existing_restaurant_should_throw_exception() {
         assertThrows(restaurantNotFoundException.class, () -> {
             restaurant = service.addRestaurant("Amelie's cafe", "Chennai", LocalTime.parse("10:00:00"), LocalTime.parse("20:00:00"));
+            //failing test case
             service.findRestaurantByName("Non-existent Restaurant");
         });
     }
